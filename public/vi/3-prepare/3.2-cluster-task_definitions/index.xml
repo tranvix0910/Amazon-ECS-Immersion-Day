@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tạo Cluster &amp; Task Definition on TRIỂN KHAI ỨNG DỤNG TRÊN AMAZON ELASTIC CONTAINER SERVICE</title>
-    <link>//localhost:1313/vi/3-prepare/3.2-cluster-task_definitions/</link>
+    <link>http://localhost:1313/vi/3-prepare/3.2-cluster-task_definitions/</link>
     <description>Recent content in Tạo Cluster &amp; Task Definition on TRIỂN KHAI ỨNG DỤNG TRÊN AMAZON ELASTIC CONTAINER SERVICE</description>
     <generator>Hugo</generator>
     <language>vi</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="//localhost:1313/vi/3-prepare/3.2-cluster-task_definitions/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/vi/3-prepare/3.2-cluster-task_definitions/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

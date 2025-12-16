@@ -1,6 +1,13 @@
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
 
+# Base URL for the site (will be overridden by --baseURL flag in GitHub Actions)
+baseURL = "http://localhost:1313/"
+
+# Canonify URLs: prepend baseURL to absolute URLs (like /images/...)
+# This ensures /images/ works both locally and on GitHub Pages
+canonifyURLs = true
+
 # For search functionality
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
