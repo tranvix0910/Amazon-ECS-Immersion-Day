@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecs:ExecuteCommand",
+                "ecs:DescribeTasks"
+            ],
+            "Resource": [
+                "arn:aws:ecs:ap-northeast-2:590183822512:task/retail-store-ecs-cluster/*",
+                "arn:aws:ecs:ap-northeast-2:590183822512:cluster/*"
+            ]
+        }
+    ]
+}

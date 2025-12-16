@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Amazon ECS Cluster on TRIỂN KHAI ỨNG DỤNG TRÊN AMAZON ELASTIC CONTAINER SERVICE</title>
+    <link>//localhost:1313/vi/2-fundamentals/2.1-ecs_cluster/</link>
+    <description>Recent content in Amazon ECS Cluster on TRIỂN KHAI ỨNG DỤNG TRÊN AMAZON ELASTIC CONTAINER SERVICE</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="//localhost:1313/vi/2-fundamentals/2.1-ecs_cluster/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

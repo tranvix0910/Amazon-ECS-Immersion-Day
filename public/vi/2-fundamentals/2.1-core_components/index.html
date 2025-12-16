@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.128.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <title>ECS - Core Components :: TRIỂN KHAI ỨNG DỤNG TRÊN AMAZON ELASTIC CONTAINER SERVICE</title>
+
+    
+    <link href="/css/nucleus.css?1765608366" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1765608366" rel="stylesheet">
+    <link href="/css/hybrid.css?1765608366" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1765608366" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1765608366" rel="stylesheet">
+    <link href="/css/auto-complete.css?1765608366" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1765608366" rel="stylesheet">
+    <link href="/css/theme.css?1765608366" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1765608366" rel="stylesheet">
+    
+    <link href="/css/theme-workshop.css?1765608366" rel="stylesheet">
+    
+    
+
+    <script src="/js/jquery-3.3.1.min.js?1765608366"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/vi/2-fundamentals/2.1-core_components/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1765608366"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1765608366"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/\/localhost:1313\/\/vi";
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1765608366"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/1-introduction/" title="Giới thiệu" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/1-introduction/">
+           <b> 1. </b> Giới thiệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-fundamentals/" title="Các khái niệm cơ bản" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/vi/2-fundamentals/">
+           <b> 2. </b> Các khái niệm cơ bản
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/2-fundamentals/2.1-core_components/" title="ECS - Core Components" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="/vi/2-fundamentals/2.1-core_components/">
+           <b> 2.1. </b> ECS - Core Components
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/3-express-mode/" title="Express Mode" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/3-express-mode/">
+           <b> 3. </b> Express Mode
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/4-managed-instances/" title="Managed Instances" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/4-managed-instances/">
+           <b> 4. </b> Managed Instances
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/5-auto-scaling/" title="Auto Scaling" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/5-auto-scaling/">
+           <b> 5. </b> Auto Scaling
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/6-networking/" title="Networking" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/6-networking/">
+           <b> 6. </b> Networking
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/7-observability/" title="Observability" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/7-observability/">
+           <b> 7. </b> Observability
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/8-security/" title="Security" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/8-security/">
+           <b> 8. </b> Security
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/9-deployments/" title="Deployments" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/9-deployments/">
+           <b> 9. </b> Deployments
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/10-storage/" title="Storage" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/10-storage/">
+           <b> 10. </b> Storage
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/11-cost-optimizations/" title="Cost Optimizations" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/11-cost-optimizations/">
+           <b> 11. </b> Cost Optimizations
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/vi/12-clean-up/" title="Clean Up" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/vi/12-clean-up/">
+           <b> 12. </b> Clean Up
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="http://awsstudygroup.com"><i class='fab fa-aws'></i> AWS Study Group - Blog</a>
+              </li>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj"><i class='fab fa-facebook'></i> AWS Study Group - Nhóm FB</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="//localhost:1313/2-fundamentals/2.1-core_components/">English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="//localhost:1313/vi/2-fundamentals/2.1-core_components/" selected>Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    <b>Authors</b> <br>
+    <ul>
+        <li><a href="http://linkedin.com/in/tranvix0910" style="color:orange;">Trần Vĩ</a></li>
+    </ul>
+</left>
+
+<left>
+    
+    <b>Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7836256&style=0038&nbdigits=9&type=page&initCount=0" title="Migrate" alt="web counter" border="0" /> <br>
+    <b><a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total Cloud Journey" alt="web counter" border="0" />
+</left>
+
+<left>
+    <br>
+    <br>
+    <b>Last Updated</b> <br>
+    <i><font color=orange>20-01-2025</font></i>
+</left>
+
+<left>
+    <br>
+    <br>
+    <b>Team</b> <br>
+    <i><a href="https://www.linkedin.com/in/jotaguy" style="color:orange">Gia Hưng</a></i>
+</left>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/vi/'>Workshop Amazon Elastic Container Service & AWS Fargate</a> > <a href='/vi/2-fundamentals/'>Các khái niệm cơ bản</a> > ECS - Core Components
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#amazon-ecs-cluster">Amazon ECS Cluster</a></li>
+        <li><a href="#amazon-ecs-service">Amazon ECS Service</a></li>
+        <li><a href="#amazon-ecs-task">Amazon ECS Task</a></li>
+        <li><a href="#amazon-ecs-task-definition">Amazon ECS Task Definition</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              ECS - Core Components
+            </h1>
+          
+
+        
+
+
+
+	<h3 id="amazon-ecs-cluster">Amazon ECS Cluster</h3>
+<ul>
+<li>
+<p>ECS Cluster là một môi trường chạy Container, là <strong>logical group</strong> để quản lý tài nguyên compute.</p>
+</li>
+<li>
+<p>Bên trong ECS Cluster sẽ có <strong>EC2 instances</strong> hoặc <strong>Fargate capacity</strong> để chạy container.</p>
+</li>
+<li>
+<p>Tất cả <strong>Tasks</strong> và <strong>Services</strong> sẽ được quản lý bởi ECS Cluster.</p>
+</li>
+</ul>
+<p><img alt="Amazon ECS Cluster" src="/images/2-fundamentals/2.1-core_components/1.png?width=300px"></p>
+
+<div class="notices note" ><p>Cluster KHÔNG phải là máy, nó chỉ là vùng quản lý.</p>
+</div>
+
+<ul>
+<li>So sánh 2 kiểu <strong>Launch Type</strong> trong ECS:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ECS on EC2</th>
+<th>ECS on Fargate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bạn quản lý server</td>
+<td><strong>✔</strong></td>
+<td><strong>✗</strong></td>
+</tr>
+<tr>
+<td>Control instance type</td>
+<td><strong>✔</strong></td>
+<td><strong>✗</strong></td>
+</tr>
+<tr>
+<td>Trả tiền theo instance</td>
+<td><strong>✔</strong></td>
+<td><strong>✗</strong></td>
+</tr>
+<tr>
+<td>Serverless</td>
+<td><strong>✗</strong></td>
+<td><strong>✔</strong></td>
+</tr>
+<tr>
+<td>Phù hợp</td>
+<td>workload lớn, ổn định</td>
+<td>microservice, startup</td>
+</tr>
+</tbody>
+</table>
+<h3 id="amazon-ecs-service">Amazon ECS Service</h3>
+<p>ECS Service là một công cụ quản lý cho phép bạn chạy và duy trì một số lượng task nhất định liên tục trong một ECS cluster. Nó là một phần thiết yếu của ECS dành cho các ứng dụng dài hạn, không giống như standalone tasks dùng cho các batch jobs ngắn hạn.</p>
+<p>Nếu một trong các task bị lỗi hoặc dừng, <strong>ECS Service Scheduler</strong> sẽ khởi chạy một instance khác của Task Definition để thay thế.</p>
+<p>Điều này giúp duy trì đúng số lượng task mong muốn (desired number of tasks) cho service.</p>
+<p>Ngoài ra, chỉ Service mới có thể được cấu hình với Load Balancer. Nếu cần phân phối traffic đến các container, bắt buộc phải sử dụng Service, không phải standalone Task. LB giúp:</p>
+<ul>
+<li>High availability</li>
+<li>Scale</li>
+<li>Health check</li>
+</ul>
+<h4 id="khi-nào-nên-dùng-service-scheduler">Khi nào nên dùng Service Scheduler?</h4>
+<p>AWS khuyến nghị sử dụng Service Scheduler cho:</p>
+<ul>
+<li>Các service</li>
+<li>Ứng dụng stateless</li>
+<li>Workload chạy dài hạn (long-running)</li>
+</ul>
+<p>Service Scheduler đảm bảo:</p>
+<ul>
+<li>Chiến lược scheduling bạn cấu hình được tuân thủ</li>
+<li>Task được reschedule khi bị lỗi</li>
+</ul>
+<p>Ví dụ:
+Nếu hạ tầng bên dưới gặp sự cố, Service Scheduler sẽ chạy lại task.</p>
+<h4 id="các-thành-phần-cấu-hình-của-ecs-service">Các Thành Phần Cấu Hình của ECS Service</h4>
+<ul>
+<li>
+<p><strong>Service Name</strong>: Tên của service để nhận diện nó trong cluster</p>
+</li>
+<li>
+<p><strong>Task Definition</strong>: Task Definition nào sẽ được sử dụng để khởi chạy tasks. Service sẽ tham chiếu Task Definition này.</p>
+</li>
+<li>
+<p><strong>Desired Count</strong>: Số lượng task mà bạn muốn Service giữ chạy liên tục. Nếu bạn chỉ định desired count là 3, Service sẽ luôn cố gắng duy trì 3 tasks đang chạy. Nếu một task bị dừng, Service sẽ khởi chạy task mới để thay thế.​</p>
+</li>
+<li>
+<p><strong>Scheduling Strategy</strong>: Có hai lựa chọn:</p>
+<ul>
+<li>
+<p><strong>REPLICA</strong>: Service chạy một số lượng mong muốn của tasks</p>
+</li>
+<li>
+<p><strong>DAEMON</strong>: Service chạy một task trên mỗi container instance trong cluster (không có desired count)​</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Deployment Type</strong>: Cách thức triển khai các phiên bản mới:​</p>
+<ul>
+<li>
+<p><strong>ECS</strong>: Sử dụng ECS Scheduler (rolling update mặc định)</p>
+</li>
+<li>
+<p><strong>CODE_DEPLOY</strong>: Sử dụng AWS CodeDeploy (hỗ trợ blue-green deployments)</p>
+</li>
+<li>
+<p><strong>EXTERNAL</strong>: Cho phép triển khai thủ công qua TaskSets (dùng với CloudFormation, Jenkins, v.v.)</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Load Balancer Configuration</strong>: Nếu bạn muốn phân phối traffic:</p>
+<ul>
+<li>
+<p><strong>Loại Load Balancer</strong>: Application Load Balancer (ALB) hoặc Network Load Balancer (NLB)</p>
+</li>
+<li>
+<p><strong>Target Group</strong>: Xác định những container nào sẽ nhận traffic</p>
+</li>
+<li>
+<p><strong>Port Mapping</strong>: Ánh xạ từ port load balancer đến port container</p>
+</li>
+<li>
+<p><strong>Health Check</strong>: Cấu hình kiểm tra sức khỏe để xác định task có hoạt động không​</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="vòng-đời-của-ecs-service">Vòng Đời của ECS Service</h4>
+<p>Service hoạt động theo chu trình sau:</p>
+<ul>
+<li>
+<p><strong>Khởi tạo</strong>: Bạn tạo Service và chỉ định desired count (ví dụ: 3 tasks)</p>
+</li>
+<li>
+<p><strong>Khởi chạy Tasks</strong>: Service scheduler khởi chạy 3 instances của Task Definition</p>
+</li>
+<li>
+<p><strong>Đăng ký với Load Balancer</strong>: Nếu có load balancer, các tasks được tự động đăng ký với target group</p>
+</li>
+<li>
+<p><strong>Giám sát liên tục</strong>: Service liên tục kiểm tra trạng thái của các tasks</p>
+</li>
+<li>
+<p><strong>Thay thế Tasks lỗi</strong>: Nếu một task gặp sự cố, Service khởi chạy task mới để duy trì desired count</p>
+</li>
+<li>
+<p><strong>Mở rộng/Thu nhỏ</strong>: Nếu auto scaling được kích hoạt, desired count sẽ tự động điều chỉnh dựa trên metrics</p>
+</li>
+</ul>
+<h4 id="deployment-configuration-cho-rolling-updates">Deployment Configuration cho Rolling Updates</h4>
+<p>Khi bạn triển khai phiên bản mới của ứng dụng (cập nhật Task Definition), ECS sử dụng deployment configuration để kiểm soát quá trình:</p>
+<ul>
+<li>
+<p><strong>MinimumHealthyPercent</strong>: Phần trăm tối thiểu của tasks phải duy trì ở trạng thái RUNNING trong suốt quá trình deployment. Ví dụ, nếu desired count là 4 và MinimumHealthyPercent là 50%, ECS đảm bảo ít nhất 2 tasks (50% của 4) vẫn đang chạy khi triển khai các phiên bản mới.​</p>
+</li>
+<li>
+<p><strong>MaximumPercent</strong>: Tổng số maximum tasks có thể chạy đồng thời trong suốt quá trình deployment, tính dưới dạng phần trăm của desired count. Ví dụ, nếu desired count là 4 và MaximumPercent là 200%, ECS cho phép tối đa 8 tasks chạy cùng lúc - 4 tasks cũ + 4 tasks mới. Điều này cho phép triển khai nhanh hơn nhưng yêu cầu nhiều tài nguyên hơn.​​</p>
+</li>
+</ul>
+<p>Ví dụ quá trình deployment:</p>
+<ul>
+<li>
+<p>Bạn có 4 tasks đang chạy version v1</p>
+</li>
+<li>
+<p>Bạn cập nhật Task Definition thành version v2</p>
+<ul>
+<li>
+<p><strong>MinimumHealthyPercent</strong>: 100%</p>
+</li>
+<li>
+<p><strong>MaximumPercent</strong>: 200%</p>
+</li>
+</ul>
+</li>
+<li>
+<p>ECS khởi chạy 4 tasks mới (v2) trước khi dừng 4 tasks cũ (v1)</p>
+</li>
+<li>
+<p>Lúc này bạn có 8 tasks chạy đồng thời</p>
+</li>
+<li>
+<p>Sau đó, ECS dừng 4 tasks v1 cũ</p>
+</li>
+<li>
+<p>Kết quả: 4 tasks v2 đang chạy</p>
+</li>
+</ul>
+<h3 id="amazon-ecs-task">Amazon ECS Task</h3>
+<p>Task đại diện cho một instance đang chạy của Task Definition trong một ECS cluster. Task là kết quả khi ta khởi chạy một Task Definition tại một thời điểm cụ thể trong một cluster. Nếu ta chỉ định chạy 3 task từ một Task Definition, AWS ECS sẽ khởi chạy 3 instance riêng biệt của Task Definition đó.</p>
+<h4 id="vòng-đời-task-task-lifecycle">Vòng Đời Task (Task Lifecycle)</h4>
+<p>Khi một task được khởi chạy (hoặc như một phần của service, hoặc như một standalone task), nó sẽ trải qua nhiều trạng thái khác nhau:</p>
+<pre><code>PROVISIONING → PENDING → ACTIVATING → RUNNING → DEACTIVATING → STOPPING → DEPROVISIONING → STOPPED
+</code></pre>
+<p>Mỗi trạng thái có ý nghĩa:</p>
+<ul>
+<li>
+<p><strong>PROVISIONING</strong>: ECS đang cấp phát các tài nguyên cần thiết (chỉ với Fargate).</p>
+</li>
+<li>
+<p><strong>PENDING</strong>: Task đang chờ để các tài nguyên (CPU, bộ nhớ) được phân bổ từ cluster.</p>
+</li>
+<li>
+<p><strong>ACTIVATING</strong>: Container đang khởi chạy và các health check đang diễn ra.</p>
+</li>
+<li>
+<p><strong>RUNNING</strong>: Container đang chạy bình thường.</p>
+</li>
+<li>
+<p><strong>DEACTIVATING</strong>: Task đang chuẩn bị dừng.</p>
+</li>
+<li>
+<p><strong>STOPPING</strong>: Task đang được dừng.</p>
+</li>
+<li>
+<p><strong>DEPROVISIONING</strong>: Tài nguyên đang được giải phóng (chỉ với Fargate).</p>
+</li>
+<li>
+<p><strong>STOPPED</strong>: Task đã dừng hoàn toàn.</p>
+</li>
+</ul>
+<p>ECS theo dõi hai trạng thái khác nhau:</p>
+<ul>
+<li>
+<p><strong>lastStatus</strong>: Trạng thái thực tế hiện tại của task.</p>
+</li>
+<li>
+<p><strong>desiredStatus</strong>: Trạng thái mục tiêu mà ta muốn task đạt được.</p>
+</li>
+</ul>
+<p>Ví dụ, nếu ta yêu cầu dừng một task, lastStatus có thể là RUNNING còn desiredStatus sẽ là STOPPED.</p>
+<h4 id="task-execution-role-vs-task-role">Task Execution Role vs Task Role</h4>
+<p>Có hai loại IAM roles trong ECS task:</p>
+<ul>
+<li>
+<p><strong>Task Execution Role</strong>: là vai trò được sử dụng bởi ECS Container Agent (không phải container application). Nó cấp quyền cho ECS agent thực hiện các hành động như:</p>
+<ul>
+<li>Kéo (pull) Docker images từ Amazon ECR</li>
+<li>Truy cập Secrets Manager hoặc Parameter Store để lấy cấu hình</li>
+<li>Gửi logs đến CloudWatch Logs</li>
+<li>Kéo tệp từ S3 để khởi chạy</li>
+</ul>
+</li>
+<li>
+<p><strong>Task Role</strong>: là vai trò được sử dụng bởi ứng dụng bên trong container. Nó cho phép ứng dụng gọi các dịch vụ AWS khác như:</p>
+<ul>
+<li>S3 (để đọc/ghi files)</li>
+<li>DynamoDB (để truy cập cơ sở dữ liệu)</li>
+<li>SNS/SQS (để gửi messages)</li>
+<li>RDS (để truy cập database)</li>
+</ul>
+</li>
+</ul>
+<h4 id="cách-ecs-đặt-placement-tasks-trên-container-instances">Cách ECS Đặt (Placement) Tasks Trên Container Instances</h4>
+<p>Khi ta chạy một task trên EC2-based cluster, ECS phải quyết định nó sẽ chạy trên instance nào. Quá trình này được gọi là task placement, và nó có thể được kiểm soát bằng <strong>Placement Strategies</strong> và <strong>Placement Constraints</strong>.</p>
+<p><strong>Placement Strategies</strong>:</p>
+<ul>
+<li>
+<p><strong>spread</strong>: Phân tán tasks trên nhiều instances dựa trên một thuộc tính (ví dụ: ecs.availability-zone, ecs.instance-type). Tốt cho high availability</p>
+</li>
+<li>
+<p><strong>binpack</strong>: Đóng gói tasks vào ít instances nhất có thể để tiết kiệm chi phí</p>
+</li>
+<li>
+<p><strong>random</strong>: Đặt tasks ngẫu nhiên (ít được sử dụng)</p>
+</li>
+</ul>
+<p><strong>Placement Constraints</strong>:</p>
+<ul>
+<li>
+<p><strong>distinctInstance</strong>: Đảm bảo mỗi task chạy trên một instance khác nhau</p>
+</li>
+<li>
+<p><strong>memberOf</strong>: Chỉ đặt tasks trên các instances có thuộc tính/tag cụ thể</p>
+</li>
+</ul>
+<h4 id="tasks---standalone-vs-service">Tasks - Standalone vs Service</h4>
+<p><strong>Standalone Task</strong>: Dùng cho các job ngắn hạn (batch jobs, one-off tasks). Task sẽ chạy đến khi hoàn thành hoặc gặp lỗi, rồi dừng lại. Không có cơ chế tự động restart.</p>
+<p><strong>Service Task</strong>: Dùng cho các ứng dụng dài hạn. Service scheduler tự động duy trì số lượng desired tasks bằng cách khởi chạy lại bất kỳ task nào bị dừng.</p>
+<h3 id="amazon-ecs-task-definition">Amazon ECS Task Definition</h3>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/vi/2-fundamentals/" title="Các khái niệm cơ bản"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/vi/3-express-mode/" title="Express Mode" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1765608366"></script>
+    <script src="/js/perfect-scrollbar.min.js?1765608366"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1765608366"></script>
+    <script src="/js/jquery.sticky.js?1765608366"></script>
+    <script src="/js/featherlight.min.js?1765608366"></script>
+    <script src="/js/highlight.pack.js?1765608366"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom-3.6.0.js?1765608366"></script>
+    <script src="/js/learn.js?1765608366"></script>
+    <script src="/js/hugo-learn.js?1765608366"></script>
+
+    <link href="/mermaid/mermaid.css?1765608366" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1765608366"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>
