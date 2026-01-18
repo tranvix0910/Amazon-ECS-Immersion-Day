@@ -1,9 +1,9 @@
 ---
 title : "Deployments"
 date :  2025-01-01
-weight : 9
+weight : 10
 chapter : false
-pre : " <b> 9. </b> "  
+pre : " <b> 10. </b> "  
 ---
 
 # Deployments

@@ -10,22 +10,22 @@ pre : " <b> 2.1. </b> "
 
 - ECS Cluster is a container runtime environment, a **logical group** for managing compute resources.
 
-- Inside an ECS Cluster there will be **EC2 instances** or **Fargate capacity** to run containers.
+- Inside ECS Cluster there will be **EC2 instances** or **Fargate capacity** to run containers.
 
-- All **Tasks** and **Services** will be managed by the ECS Cluster.
+- All **Tasks** and **Services** will be managed by ECS Cluster.
 
 ![Amazon ECS Cluster](/images/2-fundamentals/2.1-core_components/1.png?width=300px)
 
 {{% notice note %}}
-A Cluster is NOT a machine, it is just a management area.
+Cluster is NOT a machine, it is just a management area.
 {{% /notice %}}
 
-- Comparison of 2 **Launch Type** options in ECS: 
+- Comparison of 2 **Launch Type** styles in ECS: 
 
 |                        | ECS on EC2            | ECS on Fargate        |
 | ---------------------- | --------------------- | --------------------- |
-| You manage servers     | **✔**                     | **✗**                     |
+| You manage server     | **✔**                     | **✗**                     |
 | Control instance type  | **✔**                     | **✗**                     |
 | Pay per instance | **✔**                     | **✗**                     |
 | Serverless             | **✗**                     | **✔**                     |
-| Suitable for                | large, stable workloads | microservices, startups |
+| Suitable                | large, stable workload | microservice, startup |

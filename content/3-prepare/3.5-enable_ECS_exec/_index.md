@@ -6,9 +6,9 @@ chapter : false
 pre : " <b> 3.5. </b> "  
 ---
 
-In this section, we will enable the ECS Exec feature to run commands or open a shell directly into a container running on an EC2 instance or Fargate.
+In this section we will enable ECS Exec feature to be able to run commands or open shell directly into containers running on EC2 instances or Fargate.
 
-Enabling ECS Exec brings many benefits for operational management and is particularly good for security. This feature allows controlled access to containers running in ECS tasks, enabling safe, auditable troubleshooting without needing SSH access to the host.
+Enabling ECS Exec brings many benefits for operational management and is especially good for security. This feature allows controlled access to containers running in ECS tasks, helping to troubleshoot safely, with audit, without needing SSH into the host.
 
 By leveraging IAM policies and IAM roles, you can tightly control who is allowed to execute commands inside containers, thereby enhancing the overall security posture of the system.
 
@@ -17,12 +17,10 @@ Additionally, all commands executed through ECS Exec are logged to CloudWatch, h
 #### Set IAM Role for User
 
 {{% notice note %}}
-This is a step to set up permissions for the User to use ECS Exec. If following this lab, we have already configured the User with AdministratorAccess permissions, so this step can be skipped.
+This is the step to set permissions for User to be able to use ECS Exec. If following this lab, we have configured User with AdministratorAccess permissions, so this step can be skipped.
 {{% /notice %}}
 
-We will use ECS Exec from the IDE, so ensure that the IAM role attached to the IDE has all necessary permissions.
-
-Update the IAM role attached to the EC2 instance running the IDE by adding the following inline policy:
+Proceed to create Policy with the following permissions:
 
 ```json
 {
@@ -43,7 +41,7 @@ Update the IAM role attached to the EC2 instance running the IDE by adding the f
 }
 ```
 
-Add the above JSON to the `ecs-exec-command-policy.json` file and run the following command:
+Add the above json to file `ecs-exec-command-policy.json` and run the following command:
 
 ```bash
 aws iam put-role-policy --role-name $(aws sts get-caller-identity --query 'Arn' | cut -d'/' -f2) --policy-name AmazonECSExecCommand --policy-document file://ecs-exec-command-policy.json
@@ -51,7 +49,7 @@ aws iam put-role-policy --role-name $(aws sts get-caller-identity --query 'Arn' 
 
 #### Set IAM Role for ECS Task Role
 
-ECS Exec requires a task IAM role to communicate with AWS Systems Manager (SSM).
+ECS Exec requires task IAM role to communicate with AWS Systems Manager (SSM).
 
 ```json
 {
@@ -71,36 +69,36 @@ ECS Exec requires a task IAM role to communicate with AWS Systems Manager (SSM).
 }
 ```
 
-Add the above JSON to the `ecs-exec-task-role-policy.json` file and run the following command:
+Add the above json to file `ecs-exec-task-role-policy.json` and run the following command:
 
 ```bash
 aws iam put-role-policy --role-name retailStoreEcsTaskRole --policy-name AmazonECSExecTaskRolePolicy --policy-document file://ecs-exec-task-role-policy.json
 ```
 
-Check the Policy of the role you just created
+Check the Policy of the role just created
 
 ```bash
 aws iam list-role-policies --role-name retailStoreEcsTaskRole --query 'PolicyNames[0]' --output text
 ```
 
-![Check Policy of the role you just created](/images/3-prepare/3.5-enable_ECS_exec/1.png)
+![Check Policy of the role just created](/images/3-prepare/3.5-enable_ECS_exec/1.png)
 
-Check the role permissions using the following command:
+Check role permissions with the following command:
 
 ```bash
 aws iam get-role-policy --role-name retailStoreEcsTaskRole --policy-name AmazonECSExecTaskRolePolicy
 ```
 
-![Check permissions of the role you just created](/images/3-prepare/3.5-enable_ECS_exec/2.png)
+![Check permissions of the role just created](/images/3-prepare/3.5-enable_ECS_exec/2.png)
 
 #### Prepare environment
 
-Install the necessary tools:
+Install necessary tools:
 
 - AWS CLI.
 - Session Manager plugin for AWS CLI.
 
-We have already installed AWS CLI in the [Create User and Access Key](/3-prepare/3.1-user_accesskey/) section. Next, we will install the Session Manager plugin for AWS CLI.
+We have already installed AWS CLI in the [Create User and Create Access Key](/3-prepare/3.1-user_accesskey/) section. Next we will install Session Manager plugin for AWS CLI.
 
 - Linux:
 
@@ -125,7 +123,7 @@ sudo ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local
 https://s3.amazonaws.com/session-manager-downloads/plugin/latest/windows/SessionManagerPluginSetup.exe
 ```
 
-Run the following command to verify that the Session Manager plugin has been installed successfully:
+Run the following command to check Session Manager plugin has been installed successfully:
 
 ```bash
 session-manager-plugin
@@ -136,7 +134,7 @@ session-manager-plugin
 
 #### Enable ECS Exec on Service
 
-Update the UI Service to enable ECS Exec by using the `--enable-execute-command` flag:
+Update UI Service to enable ECS Exec by using the `--enable-execute-command` flag:
 
 ```bash
 aws ecs update-service \
@@ -150,7 +148,7 @@ aws ecs update-service \
 
 #### Check ARN of ECS task with ECS Exec enabled
 
-Run the following command to select a running UI task that has `enableExecuteCommand = true`:
+Run the following command to select a running UI task with `enableExecuteCommand = true`:
 
 ```bash
 ECS_EXEC_TASK_ARN=$(aws ecs list-tasks --cluster retail-store-ecs-cluster \
@@ -170,7 +168,7 @@ echo $ECS_EXEC_TASK_ARN
 
 #### Connect to ECS Task
 
-Connect to the ECS Task by running the following command:
+Proceed to connect to ECS Task by running the following command:
 
 ```bash
 if [ -z "${ECS_EXEC_TASK_ARN}" ]; then
@@ -186,7 +184,7 @@ aws ecs execute-command \
 fi
 ```
 
-We will see the Output as below:
+We will see Output as below:
 
 ```bash
 The Session Manager plugin was installed successfully. Use the AWS CLI to start a session.

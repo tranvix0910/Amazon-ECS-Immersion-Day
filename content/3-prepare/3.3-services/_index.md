@@ -40,7 +40,7 @@ The VPC has been created successfully.
 
 #### Create NAT Gateway
 
-On the VPC Console interface, select **NAT Gateways** and select **Create NAT Gateway**.
+On VPC Console interface, select **NAT Gateways** and select **Create NAT Gateway**.
 
 ![Create NAT Gateway](/images/3-prepare/3.3-services/7.png)
 
@@ -48,16 +48,16 @@ Configure the following parameters:
 
 - **NAT Gateway Name**: `ecs-workshop-nat`
 - **Availability mode**: `Regional`
-- **VPC**: The VPC you just created.
+- **VPC**: The VPC just created.
 - **Method of Elastic IP (EIP) allocation**: `Automatic`
 
-After configuration is complete, select **Create NAT Gateway**
+After configuration is complete, proceed to select **Create NAT Gateway**
 
 ![Create NAT Gateway](/images/3-prepare/3.3-services/8.png)
 
-Create an **Elastic IP** on the VPC Console interface.
+Proceed to create **Elastic IP** on VPC Console interface.
 
-- Select **Allocate Elastic IP address**
+- Select **Allocation Elastic IP address**
 
 ![Create NAT Gateway](/images/3-prepare/3.3-services/9.png)
 
@@ -69,11 +69,11 @@ The **Elastic IP** has been created successfully.
 
 ![Create NAT Gateway](/images/3-prepare/3.3-services/11.png)
 
-The NAT Gateway will automatically use the created **Elastic IP**.
+NAT Gateway will automatically take the created **Elastic IP**.
 
 ![Create NAT Gateway](/images/3-prepare/3.3-services/12.png)
 
-After creating the NAT Gateway, configure the Route Table for the Private Subnet.
+After creating NAT Gateway, proceed to configure Route Table for Private Subnet.
 
 Access **Route Table**:
 
@@ -86,7 +86,7 @@ Access **Route Table**:
 Configure the following parameters:
 
 - **Destination**: `0.0.0.0/0`
-- **Target**: `NAT Gateway` and select the ID of the NAT Gateway you just created.
+- **Target**: `NAT Gateway` and select the ID of the NAT Gateway just created.
 
 ![Create Route Table](/images/3-prepare/3.3-services/38.png)
 
@@ -100,7 +100,7 @@ Do the same for the second Private Subnet.
 
 #### Create Security Group
 
-Access the EC2 Console:
+Access EC2 Console:
 
 ![Create Security Group](/images/3-prepare/3.3-services/13.png)
 
@@ -108,11 +108,11 @@ Select **Security Groups** and select **Create Security Group**.
 
 ![Create Security Group](/images/3-prepare/3.3-services/14.png)
 
-We will create `alb-sg` to allow access to the ALB.
+We will proceed to create `alb-sg` to allow access to ALB.
 
 - **Security Group Name**: `alb-sg`
 - **Description**: `Security Group for ALB`
-- **VPC**: The VPC you just created.
+- **VPC**: The VPC just created.
 
 Inbound rules:
 
@@ -130,17 +130,17 @@ Outbound rules:
 - **Type**: `All traffic`
 - **Source**: `0.0.0.0/0`
 
-After configuration is complete, select **Create Security Group**
+After configuration is complete, proceed to select **Create Security Group**
 
 ![Create Security Group](/images/3-prepare/3.3-services/16.png)
 
-After creating the Security Group for the ALB, create a Security Group for the application.
+After creating Security Group for ALB, proceed to create Security Group for application.
 
 ![Create Security Group](/images/3-prepare/3.3-services/17.png)
 
 - **Security Group Name**: `ui-sg`
 - **Description**: `Security Group for UI`
-- **VPC**: The VPC you just created.
+- **VPC**: The VPC just created.
 
 Inbound rules:
 
@@ -150,7 +150,7 @@ Inbound rules:
 
 ![Create Security Group](/images/3-prepare/3.3-services/18.png)
 
-After configuration is complete, select **Create Security Group**
+After configuration is complete, proceed to select **Create Security Group**
 
 ![Create Security Group](/images/3-prepare/3.3-services/19.png)
 
@@ -160,11 +160,11 @@ The Security Group has been created successfully.
 
 #### Create Target Group
 
-Access the EC2 Console:
+Access EC2 Console:
 
 ![Create Target Group](/images/3-prepare/3.3-services/21.png)
 
-Select **Target Groups** and select **Create Target Group**.
+Select **Target Groups** section and select **Create Target Group**.
 
 ![Create Target Group](/images/3-prepare/3.3-services/22.png)
 
@@ -174,7 +174,7 @@ Configure the following parameters:
 - **Target Type**: `IP Addresses`
 - **Protocol**: `HTTP`
 - **Port**: `8080`
-- **VPC**: The VPC you just created.
+- **VPC**: The VPC just created.
 - **Health Check Protocol**: `HTTP`
 - **Health Check Path**: `/actuator/health`
 
@@ -202,7 +202,7 @@ The Target Group has been created successfully.
 
 #### Create Application Load Balancer
 
-On the EC2 Console interface, select **Load Balancers** and select **Create Load Balancer**.
+On EC2 Console interface, select **Load Balancers** and select **Create Load Balancer**.
 
 ![Create Application Load Balancer](/images/3-prepare/3.3-services/30.png)
 
@@ -217,12 +217,12 @@ Configure the following parameters:
 
 ![Create Application Load Balancer](/images/3-prepare/3.3-services/32.png)
 
-- **VPC**: The VPC you just created.
-- Configure 2 Public Subnets for the ALB.
+- **VPC**: The VPC just created.
+- Configure 2 Public Subnets for ALB.
 
 ![Create Application Load Balancer](/images/3-prepare/3.3-services/33.png)
 
-- Select the `alb-sg` you just created.
+- Select `alb-sg` just created.
 
 ![Create Application Load Balancer](/images/3-prepare/3.3-services/34.png)
 
@@ -234,9 +234,9 @@ Review and select **Create Load Balancer**.
 
 #### Create ECS Service
 
-After creating the above components, create the ECS Service.
+After creating the above components, proceed to create ECS Service.
 
-Use the following CLI to create the ECS Service.
+Use the following CLI to create ECS Service.
 
 Note the following parameters:
 
@@ -269,11 +269,11 @@ Check Task information:
 
 ![Create ECS Service](/images/3-prepare/3.3-services/43.png)
 
-We can see that 2 Tasks have been created successfully.
+We can see 2 Tasks have been created successfully.
 
 ![Create ECS Service](/images/3-prepare/3.3-services/44.png)
 
-Access the web using the ALB URL to check the website.
+Proceed to access the Web with ALB URL to check the website.
 
 `http://ecs-workshop-alb-653740503.ap-northeast-2.elb.amazonaws.com`
 
@@ -281,7 +281,7 @@ Access the web using the ALB URL to check the website.
 
 The application has been deployed successfully.
 
-After creating the basic components, the current architecture of the configured Services is shown below.
+After creating the basic components, the current architecture of the configured Services is displayed below.
 
 ![Create ECS Service](/images/3-prepare/3.3-services/46.png)
 

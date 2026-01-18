@@ -1,0 +1,66 @@
+{
+    "family": "retail-store-ecs-ui",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "environment": [
+        {
+            "name": "RETAIL_UI_ENDPOINTS_ORDERS",
+            "value": "http://orders"
+        },
+        {
+            "name": "RETAIL_UI_ENDPOINTS_CHECKOUT",
+            "value": "http://checkout"
+        },
+        {
+            "name": "RETAIL_UI_ENDPOINTS_CATALOG",
+            "value": "http://catalog"
+        }
+    ],
+    "containerDefinitions": [
+        {
+            "name": "application",
+            "image": "public.ecr.aws/aws-containers/retail-store-sample-ui:1.2.3",
+            "portMappings": [
+                {
+                    "name": "application",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "linuxParameters": {
+                "initProcessEnabled": true
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8080/actuator/health || exit 1"
+                ],
+                "interval": 10,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 60
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "retail-store-ecs-tasks",
+                    "awslogs-region": "ap-northeast-2",
+                    "awslogs-stream-prefix": "ui-service"
+                }
+            }
+        }
+    ],
+    "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskRole"
+}

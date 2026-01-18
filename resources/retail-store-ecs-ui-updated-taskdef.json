@@ -53,6 +53,6 @@
             }
         }
     ],
-    "executionRoleArn": "arn:aws:iam::590183822512:role/retailStoreEcsTaskExecutionRole",
-    "taskRoleArn": "arn:aws:iam::590183822512:role/retailStoreEcsTaskRole"
+    "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskRole"
 }

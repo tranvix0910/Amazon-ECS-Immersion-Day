@@ -1,0 +1,53 @@
+{
+    "family": "retail-store-ecs-ui-managed",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "MANAGED_INSTANCES"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "containerDefinitions": [
+        {
+            "name": "application",
+            "image": "public.ecr.aws/aws-containers/retail-store-sample-ui:1.2.3",
+            "portMappings": [
+                {
+                    "name": "application",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "versionConsistency": "disabled",
+            "essential": true,
+            "linuxParameters": {
+                "initProcessEnabled": true
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8080/actuator/health || exit 1"
+                ],
+                "interval": 10,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 60
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "retail-store-ecs-tasks",
+                    "awslogs-region": "$AWS_REGION",
+                    "awslogs-stream-prefix": "ui-managed-service"
+                }
+            }
+        }
+    ],
+    "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskRole"
+}

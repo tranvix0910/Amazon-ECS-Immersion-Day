@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.128.0">
+    <meta name="description" content="">
+<meta name="author" content="journeyoftheaverageguy@gmail.com">
+
+    <link rel="icon" href="http://localhost:1313/images/favicon.png" type="image/png">
+
+    <title>Service Auto Scaling :: DEPLOY APPLICATIONS ON AMAZON ELASTIC CONTAINER SERVICE</title>
+
+    
+    <link href="http://localhost:1313/css/nucleus.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/fontawesome-all.min.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/hybrid.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/featherlight.min.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/perfect-scrollbar.min.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/auto-complete.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/atom-one-dark-reasonable.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/theme.css?1768702416" rel="stylesheet">
+    <link href="http://localhost:1313/css/hugo-theme.css?1768702416" rel="stylesheet">
+    
+    <link href="http://localhost:1313/css/theme-workshop.css?1768702416" rel="stylesheet">
+    
+    
+
+    <script src="http://localhost:1313/js/jquery-3.3.1.min.js?1768702416"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="http://localhost:1313/6-auto-scaling/6.1-sas/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="http://localhost:1313/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="http://localhost:1313/js/lunr.min.js?1768702416"></script>
+<script type="text/javascript" src="http://localhost:1313/js/auto-complete.js?1768702416"></script>
+<script type="text/javascript">
+    
+        var baseurl = "http:\/\/localhost:1313\/";
+    
+</script>
+<script type="text/javascript" src="http://localhost:1313/js/search.js?1768702416"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/1-introduction/" title="Introduction" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/1-introduction/">
+           <b> 1. </b> Introduction
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-fundamentals/" title="Fundamentals" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/2-fundamentals/">
+           <b> 2. </b> Fundamentals
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-fundamentals/2.1-ecs_cluster/" title="Amazon ECS Cluster" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/2-fundamentals/2.1-ecs_cluster/">
+           <b> 2.1. </b> Amazon ECS Cluster
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-fundamentals/2.2-ecs_service/" title="Amazon ECS Service" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/2-fundamentals/2.2-ecs_service/">
+           <b> 2.2. </b> Amazon ECS Service
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-fundamentals/2.3-ecs_task/" title="Amazon ECS Task" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/2-fundamentals/2.3-ecs_task/">
+           <b> 2.3. </b> Amazon ECS Task
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/2-fundamentals/2.4-ecs_task_definition/" title="Amazon ECS Task Definition" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/2-fundamentals/2.4-ecs_task_definition/">
+           <b> 2.4. </b> Amazon ECS Task Definition
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-prepare/" title="Preparation" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/3-prepare/">
+           <b> 3. </b> Preparation
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-prepare/3.1-user_accesskey/" title="Create User &amp; Access Key" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/3-prepare/3.1-user_accesskey/">
+           <b> 3.1. </b> Create User &amp; Access Key
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-prepare/3.2-cluster-task_definitions/" title="Create Cluster &amp; Task Definition" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/3-prepare/3.2-cluster-task_definitions/">
+           <b> 3.2. </b> Create Cluster &amp; Task Definition
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-prepare/3.3-services/" title="Services" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/3-prepare/3.3-services/">
+           <b> 3.3. </b> Services
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-prepare/3.4-updated_services/" title="Update Services" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/3-prepare/3.4-updated_services/">
+           <b> 3.4. </b> Update Services
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/3-prepare/3.5-enable_ecs_exec/" title="Enable ECS Exec" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/3-prepare/3.5-enable_ecs_exec/">
+           <b> 3.5. </b> Enable ECS Exec
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-express-mode/" title="Express Mode" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/4-express-mode/">
+           <b> 4. </b> Express Mode
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-express-mode/4.1-setup_deploy/" title="Express Mode Setup &amp; Deployment" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/4-express-mode/4.1-setup_deploy/">
+           <b> 4.1. </b> Express Mode Setup &amp; Deployment
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/4-express-mode/4.2-update/" title="Express Mode Update" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/4-express-mode/4.2-update/">
+           <b> 4.2. </b> Express Mode Update
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-managed-instances/" title="ECS Managed Instances" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/5-managed-instances/">
+           <b> 5. </b> ECS Managed Instances
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-managed-instances/5.1-enable/" title="Enable ECS Managed Instances" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/5-managed-instances/5.1-enable/">
+           <b> 5.1. </b> Enable ECS Managed Instances
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-managed-instances/5.2-deploy/" title="Deploy with Managed Instances" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/5-managed-instances/5.2-deploy/">
+           <b> 5.2. </b> Deploy with Managed Instances
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/5-managed-instances/5.3-managed/" title="Managed Instances Infrastructure" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/5-managed-instances/5.3-managed/">
+           <b> 5.3. </b> Managed Instances Infrastructure
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-auto-scaling/" title="Auto Scaling" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="http://localhost:1313/6-auto-scaling/">
+           <b> 6. </b> Auto Scaling
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-auto-scaling/6.1-sas/" title="Service Auto Scaling" class="dd-item 
+        
+        active
+        
+        ">
+      <a href="http://localhost:1313/6-auto-scaling/6.1-sas/">
+           <b> 6.1. </b> Service Auto Scaling
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-auto-scaling/6.2-target_tracking_scaling/" title="Target Tracking Scaling" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/6-auto-scaling/6.2-target_tracking_scaling/">
+           <b> 6.2. </b> Target Tracking Scaling
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/6-auto-scaling/6.3-scheduled_scaling/" title="Scheduled Scaling" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/6-auto-scaling/6.3-scheduled_scaling/">
+           <b> 6.3. </b> Scheduled Scaling
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-networking/" title="Networking" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/7-networking/">
+           <b> 7. </b> Networking
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-networking/7.1-network_mode/" title="Amazon ECS Network Mode" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/7-networking/7.1-network_mode/">
+           <b> 7.1. </b> Amazon ECS Network Mode
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-networking/7.2-service-connect/" title="ECS Service Connect" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/7-networking/7.2-service-connect/">
+           <b> 7.2. </b> ECS Service Connect
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/7-networking/7.2-service-connect/7.2.1-enable_service_connect/" title="Enable Service Connect" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/7-networking/7.2-service-connect/7.2.1-enable_service_connect/">
+           <b> 7.2.1. </b> Enable Service Connect
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/8-observability/" title="Observability" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/8-observability/">
+           <b> 8. </b> Observability
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/9-security/" title="Security" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/9-security/">
+           <b> 9. </b> Security
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/10-deployments/" title="Deployments" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/10-deployments/">
+           <b> 10. </b> Deployments
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/11-storage/" title="Storage" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/11-storage/">
+           <b> 11. </b> Storage
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/12-cost-optimizations/" title="Cost Optimizations" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/12-cost-optimizations/">
+           <b> 12. </b> Cost Optimizations
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/13-clean-up/" title="Clean Up" class="dd-item 
+        
+        
+        
+        ">
+      <a href="http://localhost:1313/13-clean-up/">
+           <b> 13. </b> Clean Up
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://aws.amazon.com/blogs"><i class='fab fa-aws'></i> AWS Study Group - Blog</a>
+              </li>
+          
+              <li> 
+                  <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj"><i class='fab fa-facebook'></i> AWS Study Group - FB Group</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="en" value="http://localhost:1313/6-auto-scaling/6.1-sas/" selected>English</option>
+                    
+                  
+              
+                  
+              
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="vi" value="http://localhost:1313/vi/6-auto-scaling/6.1-sas/">Tiếng Việt</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+      
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    <b>Authors</b> <br>
+    <ul>
+        <li><a href="http://linkedin.com/in/tranvix0910" style="color:orange;">Trần Vĩ</a></li>
+    </ul>
+</left>
+
+<left>
+    
+    <b>Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7836256&style=0038&nbdigits=9&type=page&initCount=0" title="Migrate" alt="web counter" border="0" /> <br>
+    <b><a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total Cloud Journey" alt="web counter" border="0" />
+</left>
+
+<left>
+    <br>
+    <br>
+    <b>Last Updated</b> <br>
+    <i><font color=orange>20-01-2025</font></i>
+</left>
+
+<left>
+    <br>
+    <br>
+    <b>Team</b> <br>
+    <i><a href="https://www.linkedin.com/in/jotaguy" style="color:orange">Gia Hưng</a></i>
+</left>
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='http://localhost:1313/'>Workshop Amazon Elastic Container Service & AWS Fargate</a> > <a href='http://localhost:1313/6-auto-scaling/'>Auto Scaling</a> > Service Auto Scaling
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Service Auto Scaling
+            </h1>
+          
+
+        
+
+
+
+	<h4 id="service-auto-scaling">Service Auto Scaling</h4>
+<p>Amazon ECS integrates with Amazon CloudWatch to allow scaling ECS services effectively based on real-time metrics. These metrics are transmitted from Amazon ECS to CloudWatch every minute, enabling accurate monitoring and timely scaling decisions.</p>
+<p>When metrics exceed thresholds defined in scaling policy, CloudWatch will trigger an alarm to adjust desired number of tasks in your service. This dynamic adjustment process will increase desired capacity in scale-out events and decrease in scale-in events, ensuring optimal resource usage.</p>
+<p><img alt="Service Auto Scaling" src="http://localhost:1313/images/6-auto-scaling/6.1-sas/1.png?width=80%"></p>
+<p>Amazon ECS provides three advanced service scaling strategies:</p>
+<p><strong>Target Tracking Scaling</strong>:</p>
+<ul>
+<li>This method aims to maintain a scaling metric at a specific target value by automatically adjusting the number of tasks. Target tracking scaling is preferred due to its simplicity and low maintenance requirements, making it an ideal choice for businesses wanting to achieve operational efficiency without frequent manual intervention.</li>
+</ul>
+<p><strong>Step Scaling</strong>:</p>
+<ul>
+<li>This strategy provides more detailed control over scaling actions. Users can choose metrics, set threshold values, and define step adjustments to specify the amount of resources to add or remove. It also allows customizing breach evaluation periods for metric alarms, providing a flexible approach to efficiently handle volatile workloads.</li>
+</ul>
+<p><strong>Scheduled Scaling</strong>:</p>
+<ul>
+<li>This method is most suitable when scaling actions can be predicted in advance based on known demand patterns. It is ideal for applications with predictable traffic fluctuations, allowing proactive resource management to ensure service stability and performance during peak times.</li>
+</ul>
+<h4 id="target-tracking-scaling">Target Tracking Scaling</h4>
+<p>Automatically maintain metric around a target value. ECS doesn&rsquo;t care how many tasks need to be added, it only cares:</p>
+<ul>
+<li>
+<p>&ldquo;Is the current metric deviating from the target value?&rdquo;</p>
+</li>
+<li>
+<p>If deviating → ECS automatically calculates the number of tasks to scale.</p>
+</li>
+</ul>
+<pre tabindex="0"><code>desiredTasks = currentTasks × (currentMetric / targetMetric)
+</code></pre><p>Example: CPU-based scaling</p>
+<ul>
+<li>Metric: ECSServiceAverageCPUUtilization</li>
+<li>Target value: 50%</li>
+<li>Currently:
+<ul>
+<li>2 tasks</li>
+<li>CPU = 90%</li>
+</ul>
+</li>
+</ul>
+<pre tabindex="0"><code>desiredTasks = 2 × (90 / 50) = 3.6 ≈ 4 tasks
+</code></pre><p>-&gt; ECS scales 2 → 4 tasks.</p>
+<ul>
+<li><strong>Advantages</strong>:
+<ul>
+<li>Easy to configure</li>
+<li>No complex tuning needed</li>
+<li>Low maintenance</li>
+<li>Avoids over-scaling</li>
+</ul>
+</li>
+<li><strong>Disadvantages</strong>:
+<ul>
+<li>Less detailed control</li>
+<li>Not suitable for workloads with very fast spikes</li>
+</ul>
+</li>
+</ul>
+<p><strong>When to use?</strong></p>
+<ul>
+<li>80–90% of ECS services.</li>
+<li>Web services, APIs, microservices.</li>
+<li>Gradually increasing or relatively stable load.</li>
+</ul>
+<h4 id="step-scaling">Step Scaling</h4>
+<p>Scale by &ldquo;steps&rdquo; based on threshold.</p>
+<p>Proactively define:</p>
+<ul>
+<li>Which metric</li>
+<li>When threshold is exceeded by how much</li>
+<li>Then scale how many tasks</li>
+</ul>
+<p>ECS doesn&rsquo;t calculate automatically, but follows the established rules exactly.</p>
+<p>Example: CPU-based Step Scaling</p>
+<ul>
+<li>Metric: CPUUtilization</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 60%</td>
+<td>+1 task</td>
+</tr>
+<tr>
+<td>≥ 75%</td>
+<td>+2 tasks</td>
+</tr>
+<tr>
+<td>≥ 90%</td>
+<td>+4 tasks</td>
+</tr>
+<tr>
+<td>≤ 30%</td>
+<td>-1 task</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Service has 2 tasks and CPU increases to 85% -&gt; ECS increases to 2 tasks.</li>
+</ul>
+<p>Step scaling uses CloudWatch Alarm:</p>
+<p>Example:</p>
+<ul>
+<li>CPU ≥ 75%</li>
+<li>Maintain for 2 consecutive minutes
+→ Trigger scale action</li>
+</ul>
+<p>Avoid scaling due to short-term spikes (increase briefly then decrease).</p>
+<p><strong>Advantages</strong></p>
+<ul>
+<li>Very detailed control</li>
+<li>Suitable for highly volatile workloads</li>
+<li>Can use non-proportional metrics</li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul>
+<li>Complex configuration</li>
+<li>Easy to make mistakes if tuning is poor</li>
+<li>Requires frequent monitoring &amp; adjustment</li>
+</ul>
+<p><strong>When to use?</strong></p>
+<ul>
+<li>Workloads with strong, non-linear spikes</li>
+<li>Batch processing</li>
+<li>Legacy systems</li>
+<li>When you need precise control over number of tasks to increase/decrease</li>
+</ul>
+<h4 id="scheduled-scaling">Scheduled Scaling</h4>
+<p>Scale according to schedule.</p>
+<p>Configurer knows in advance: When load is high, when load is low.</p>
+<p>ECS scales according to preset time, no metric needed.</p>
+<p>Example: Business hours website with operating hours from 8:00 to 18:00.</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>08:00 – 18:00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>18:00 – 08:00</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Advantages</strong></p>
+<ul>
+<li>Very stable</li>
+<li>Not dependent on metrics</li>
+<li>Avoids cold start</li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul>
+<li>Cannot react to unexpected traffic</li>
+<li>Must predict correctly</li>
+</ul>
+<p><strong>When to use?</strong></p>
+<ul>
+<li>Traffic with clear patterns</li>
+<li>Business hours</li>
+<li>Fixed events (sales, livestreams, exam systems)</li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="http://localhost:1313/6-auto-scaling/" title="Auto Scaling"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="http://localhost:1313/6-auto-scaling/6.2-target_tracking_scaling/" title="Target Tracking Scaling" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="http://localhost:1313/js/clipboard.min.js?1768702416"></script>
+    <script src="http://localhost:1313/js/perfect-scrollbar.min.js?1768702416"></script>
+    <script src="http://localhost:1313/js/perfect-scrollbar.jquery.min.js?1768702416"></script>
+    <script src="http://localhost:1313/js/jquery.sticky.js?1768702416"></script>
+    <script src="http://localhost:1313/js/featherlight.min.js?1768702416"></script>
+    <script src="http://localhost:1313/js/highlight.pack.js?1768702416"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="http://localhost:1313/js/modernizr.custom-3.6.0.js?1768702416"></script>
+    <script src="http://localhost:1313/js/learn.js?1768702416"></script>
+    <script src="http://localhost:1313/js/hugo-learn.js?1768702416"></script>
+
+    <link href="http://localhost:1313/mermaid/mermaid.css?1768702416" rel="stylesheet" />
+    <script src="http://localhost:1313/mermaid/mermaid.js?1768702416"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

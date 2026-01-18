@@ -8,15 +8,15 @@ pre : " <b> 3.2. </b> "
 
 #### Create Cluster
 
-Create an Amazon ECS Cluster named `retail-store-ecs-cluster` with [CloudWatch Container Insights](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-container-insights.html).
+Proceed to create Amazon ECS Cluster named `retail-store-ecs-cluster` with [CloudWatch Container Insights](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-container-insights.html).
 
-Container Insights collects, aggregates, and summarizes metrics and logs from containerized applications.
+Container Insight collects, aggregates and summarizes metrics and logs from Container applications.
 
 ```bash
 aws ecs create-cluster --cluster-name retail-store-ecs-cluster --capacity-providers FARGATE FARGATE_SPOT --default-capacity-provider-strategy capacityProvider=FARGATE,weight=1 --settings name=containerInsights,value=enhanced
 ```
 
-After running the command, you will get the following result and can see that **CloudWatch Container Insights** has been configured successfully.
+After running the command, you will get the following result and can see **CloudWatch Container Insights** has been configured successfully.
 
 ```json
 {
@@ -44,22 +44,22 @@ After running the command, you will get the following result and can see that **
 
 ![Configure ECS with AWS CLI](/images/3-prepare/3.2-cluster-task_definitions/1.png)
 
-Check the AWS Console to confirm the cluster has been created successfully.
+Check on AWS Console to confirm cluster has been created successfully.
 
 ![Configure ECS with AWS CLI](/images/3-prepare/3.2-cluster-task_definitions/2.png)
 
-#### Create Roles
+#### Create Role
 
-Create two IAM Roles required for ECS Tasks:
+Create two IAM Roles needed for ECS Task:
 
-- **retailStoreEcsTaskExecutionRole**: allows ECS to pull images, write logs, and access secrets.
+- **retailStoreEcsTaskExecutionRole**: allows ECS to pull image, write logs, access secrets.
 
-- **retailStoreEcsTaskRole**: grants permissions to the application inside the container.
+- **retailStoreEcsTaskRole**: grants permissions for application inside container.
 
 ```bash
 aws iam create-role --role-name retailStoreEcsTaskExecutionRole --assume-role-policy-document file://ecs-task-trust.json
 ```
-Content of the `ecs-task-trust.json` file:
+Content of `ecs-task-trust.json` file:
 ```json
 {
     "Version": "2012-10-17",
@@ -95,7 +95,7 @@ aws iam create-role --role-name retailStoreEcsTaskRole --assume-role-policy-docu
 
 #### Create Task Definition
 
-Create a Task Definition named `retail-store-ecs-ui` to be used for the **UI Service** with the following configuration:
+Create Task Definition named `retail-store-ecs-ui` used for **UI Service** with the following configuration:
 
 ```json
 {
@@ -153,12 +153,12 @@ Create a Task Definition named `retail-store-ecs-ui` to be used for the **UI Ser
 ```
 
 {{% notice note %}}
-Note that **ACCOUNT_ID** is your AWS account ID, and **AWS_REGION** is your region.
+Note **ACCOUNT_ID** is your AWS account ID, **AWS_REGION** is your region.
 {{% /notice %}}
 
-Create a JSON file with the above content and name it `retail-store-ecs-ui-taskdef.json`.
+Create a json file with the above content and name it `retail-store-ecs-ui-taskdef.json`.
 
-Run the following command to create the Task Definition.
+Run the following command to create Task Definition.
 
 ```bash
 aws ecs register-task-definition --cli-input-json file://retail-store-ecs-ui-taskdef.json
@@ -166,7 +166,7 @@ aws ecs register-task-definition --cli-input-json file://retail-store-ecs-ui-tas
 
 ![Configure ECS with AWS CLI](/images/3-prepare/3.2-cluster-task_definitions/3.png)
 
-Check the AWS Console to confirm the Task Definition has been created successfully.
+Check on AWS Console to confirm Task Definition has been created successfully.
 
 ![Configure ECS with AWS CLI](/images/3-prepare/3.2-cluster-task_definitions/4.png)
 

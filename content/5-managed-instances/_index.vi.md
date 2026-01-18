@@ -14,6 +14,8 @@ Amazon ECS Managed Instances là một tùy chọn compute được quản lý h
 
 Bằng cách chuyển giao các tác vụ vận hành cho AWS, ECS Managed Instances giúp bắt đầu nhanh hơn, giảm tổng chi phí sở hữu (TCO).
 
+![ECS Managed Instances](/images/5-managed-instances/1.png)
+
 #### Lợi ích của Amazon ECS Managed Instances
 
 - **Tăng tốc đổi mới (Accelerate innovation)** : Giao việc quản lý hạ tầng và vá lỗi (patching) cho AWS, từ đó giảm đáng kể overhead vận hành.

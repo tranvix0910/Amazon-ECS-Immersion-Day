@@ -1,0 +1,22 @@
+{
+    "name": "retail-store-managed-instances-cp",
+    "cluster": "retail-store-ecs-cluster",
+    "managedInstancesProvider": {
+        "infrastructureRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/ecsManagedInstanceInfrastructureRole",
+        "instanceLaunchTemplate": {
+            "ec2InstanceProfileArn": "arn:aws:iam::${ACCOUNT_ID}:instance-profile/ecsInstanceRoleManagedInstanceProfile",
+            "networkConfiguration": {
+                "subnets": [
+                    "$PRIVATE_SUBNET1",
+                    "$PRIVATE_SUBNET2"
+                ],
+                "securityGroups": [
+                    "${UI_SG_ID}"
+                ]
+            },
+            "storageConfiguration": {
+                "storageSizeGiB": 100
+            }
+        }
+    }
+}

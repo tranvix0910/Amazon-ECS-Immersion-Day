@@ -1,0 +1,81 @@
+{
+    "family": "retail-store-ecs-orders",
+    "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/ordersEcsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/retailStoreEcsTaskRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "containerDefinitions": [
+        {
+            "name": "application",
+            "image": "public.ecr.aws/aws-containers/retail-store-sample-orders:1.2.3",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "application",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "linuxParameters": {
+                "initProcessEnabled": true
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8080/actuator/health || exit 1"
+                ],
+                "interval": 10,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 60
+            },
+            "environment": [
+                {
+                    "name": "RETAIL_ORDERS_PERSISTENCE_PROVIDER",
+                    "value": "postgres"
+                },
+                {
+                    "name": "RETAIL_ORDERS_MESSAGING_PROVIDER",
+                    "value": "in-memory"
+                }
+            ],
+            "secrets": [
+                {
+                    "name": "RETAIL_ORDERS_PERSISTENCE_ENDPOINT",
+                    "valueFrom": "arn:aws:ssm:${AWS_REGION}:${ACCOUNT_ID}:parameter/retail-store-ecs/orders/db-endpoint-postgres"
+                },
+                {
+                    "name": "RETAIL_ORDERS_PERSISTENCE_NAME",   
+                    "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:retail-store-ecs-orders-db:dbname::"
+                },
+                {
+                    "name": "RETAIL_ORDERS_PERSISTENCE_USERNAME",
+                    "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:retail-store-ecs-orders-db:username::"
+                },
+                {
+                    "name": "RETAIL_ORDERS_PERSISTENCE_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:retail-store-ecs-orders-db:password::"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "retail-store-ecs-tasks",
+                    "awslogs-region": "${AWS_REGION}",
+                    "awslogs-stream-prefix": "orders-service"
+                }
+            }
+        }
+    ]
+}

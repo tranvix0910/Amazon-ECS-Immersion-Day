@@ -14,7 +14,7 @@ Welcome to **Amazon Elastic Container Service Immersion Day!**
 
 **Amazon Elastic Container Service (ECS)** is a fully managed **Container Orchestration Service** by AWS. It allows you to deploy, manage, and scale containerized applications quickly and efficiently.
 
-ECS can integrate with the AWS ecosystem, providing an easy-to-use solution for running containerized workloads in the Cloud environment, while supporting advanced security capabilities through **Amazon ECS Anywhere**.
+ECS can integrate with the AWS ecosystem, providing an easy-to-use solution for running container workloads in the cloud environment, while supporting advanced security capabilities through **Amazon ECS Anywhere**.
 
 **AWS Fargate** is a **Serverless** service, pay-as-you-go, that allows you to build applications without worrying about infrastructure. By delegating server management, resource allocation, and scaling to AWS, this helps enhance operational capabilities, accelerate the process of bringing ideas to production, and optimize TCO (Total Cost of Ownership).
 
@@ -23,17 +23,17 @@ ECS can integrate with the AWS ecosystem, providing an easy-to-use solution for 
 - Understand the fundamental concepts of Amazon ECS and AWS Fargate: **cluster**, **task**, and **service**.
 - Deploy autoscaling for workloads to meet changing load levels.
 - Monitor workload behavior through logs, metrics, and traces.
-- Understand networking in AWS Fargate and advanced networking concepts.
+- Grasp networking in AWS Fargate and advanced networking concepts.
 - Explore security aspects, including secure credential and secret management.
 - Learn different workload deployment strategies on Amazon ECS.
 
 #### Target Audience
 
-- Workshop at **200+** level, suitable for those who want to get hands-on with Amazon ECS, familiarize themselves with ECS core components, as well as practical applications in deploying and managing containerized workloads.
+- Workshop at **200+** level, suitable for those who want hands-on experience with Amazon ECS, familiarize themselves with ECS core components, as well as practical applications in deploying and managing containerized workloads.
 
 #### Pre-requisites
 
-- This is not an introductory container workshop. Participants need foundational knowledge about Containers, specifically:
+- This is not an introductory workshop on containers. Participants need foundational knowledge about Containers, specifically:
 
     - Understanding of **Containers**, including the ability to build containers using **Dockerfile**.
     - Basic knowledge and familiarity with **AWS Management Console**, **AWS APIs**.

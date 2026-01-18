@@ -1,0 +1,7 @@
+{
+    "TargetValue": 1500,
+    "PredefinedMetricSpecification": {
+        "PredefinedMetricType": "ALBRequestCountPerTarget",
+        "ResourceLabel": "app/ecs-workshop-alb/07eeccd166f4ef38/targetgroup/ui-tg/2feb79f68add27c7"
+    }
+}

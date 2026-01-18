@@ -6,17 +6,17 @@ chapter : false
 pre : " <b> 3.4. </b> "  
 ---
 
-In this section, we will update an ECS Service. This process is commonly used in scenarios such as changing container images or adjusting application configurations.
+In this section we will update an ECS Service. This process is commonly used in situations such as changing container image or adjusting application configuration.
 
-**Environment variables** are one of the main mechanisms for configuring workloads running in containers, regardless of which Orchestrator is used. We will change the configuration of the UI Service to use new environment variables.
+**Environment variables** are one of the main mechanisms to configure workloads running in containers, regardless of which Orchestrator is used. We will proceed to change the configuration of UI Service to use new environment variables.
 
-**Docker Images** cannot be changed after being built, so environment variables are a simple and flexible way to configure and adjust application behavior when containers are running.
+**Docker Image** cannot be changed after being built, so environment variables are a simple and flexible way to configure and adjust application behavior when the container is running.
 
 In this case, we will use the **RETAIL_UI_THEME** variable, which will change the default interface color of the application.
 
 #### Declare variables in Task Definition
 
-Environment variables in ECS task definitions are declared as name-value pairs, for example:
+Environment variables in ECS task definition are declared as name-value pairs, for example:
 
 ```json
 "environment": [
@@ -27,7 +27,7 @@ Environment variables in ECS task definitions are declared as name-value pairs, 
 ]
 ```
 
-Next, we will update the `retail-store-ecs-ui-updated-taskdef.json` file with the new environment variable.
+Next, proceed to update the json file `retail-store-ecs-ui-updated-taskdef.json` with the new environment variable.
 
 ```json
 {
@@ -101,13 +101,13 @@ aws ecs register-task-definition \
 
 
 {{% notice note %}}
-ECS task definitions are immutable, meaning they cannot be edited after creation.
-Instead, the above command will create a new revision, which is a copy of the old task definition but with updated parameters.
+ECS task definition is immutable, meaning it cannot be edited after creation.
+Instead, the above command will create a new revision, which is a copy of the old task definition but with updated new parameters.
 {{% /notice %}}
 
 #### Check Task Definition revisions
 
-You can check how many revisions currently exist using the command:
+You can check how many revisions currently exist with the command:
 
 ```bash
 aws ecs list-task-definitions --family-prefix retail-store-ecs-ui --sort DESC --max-items 2
@@ -126,22 +126,22 @@ The result will display the revisions of the UI task definition:
 
 ![Check Task Definition revisions](/images/3-prepare/3.4-updated_services/3.png)
 
-Or you can check directly on the AWS Console:
+Or you can check directly on AWS Console:
 
 ![Update Task Definition](/images/3-prepare/3.4-updated_services/2.png)
 
-#### Update ECS Service to use the new revision
+#### Update ECS Service to use new revision
 
-Next, update the ECS service to use the new task definition:
+Next, update ECS service to use the new task definition:
 
 ```bash
 aws ecs update-service --cluster retail-store-ecs-cluster --service ui --task-definition retail-store-ecs-ui
 ```
 
-![Update ECS Service to use the new revision](/images/3-prepare/3.4-updated_services/4.png)
+![Update ECS Service to use new revision](/images/3-prepare/3.4-updated_services/4.png)
 
-#### Check the results
+#### Check results
 
-![Check the results](/images/3-prepare/3.4-updated_services/5.png)
+![Check results](/images/3-prepare/3.4-updated_services/5.png)
 
-![Check the results](/images/3-prepare/3.4-updated_services/6.png)
+![Check results](/images/3-prepare/3.4-updated_services/6.png)

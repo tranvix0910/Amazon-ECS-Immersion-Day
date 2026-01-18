@@ -2,6 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/vi/7-networking/7.1-network_mode/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/7-networking/7.1-network_mode/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/7-networking/7.1-network_mode/"
+                />
+  </url><url>
     <loc>http://localhost:1313/vi/5-managed-instances/5.1-enable/</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -13,6 +26,19 @@
                 rel="alternate"
                 hreflang="vi"
                 href="http://localhost:1313/vi/5-managed-instances/5.1-enable/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/vi/7-networking/7.2-service-connect/7.2.1-enable_service_connect/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/7-networking/7.2-service-connect/7.2.1-enable_service_connect/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/7-networking/7.2-service-connect/7.2.1-enable_service_connect/"
                 />
   </url><url>
     <loc>http://localhost:1313/vi/4-express-mode/4.1-setup_deploy/</loc>
@@ -39,6 +65,19 @@
                 rel="alternate"
                 hreflang="vi"
                 href="http://localhost:1313/vi/1-introduction/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/vi/6-auto-scaling/6.1-sas/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/6-auto-scaling/6.1-sas/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/6-auto-scaling/6.1-sas/"
                 />
   </url><url>
     <loc>http://localhost:1313/vi/3-prepare/3.1-user_accesskey/</loc>
@@ -145,6 +184,19 @@
                 href="http://localhost:1313/vi/2-fundamentals/"
                 />
   </url><url>
+    <loc>http://localhost:1313/vi/7-networking/7.2-service-connect/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/7-networking/7.2-service-connect/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/7-networking/7.2-service-connect/"
+                />
+  </url><url>
     <loc>http://localhost:1313/vi/3-prepare/3.2-cluster-task_definitions/</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -158,6 +210,32 @@
                 href="http://localhost:1313/vi/3-prepare/3.2-cluster-task_definitions/"
                 />
   </url><url>
+    <loc>http://localhost:1313/vi/6-auto-scaling/6.2-target_tracking_scaling/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/6-auto-scaling/6.2-target_tracking_scaling/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/6-auto-scaling/6.2-target_tracking_scaling/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/vi/5-managed-instances/5.2-deploy/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/5-managed-instances/5.2-deploy/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/5-managed-instances/5.2-deploy/"
+                />
+  </url><url>
     <loc>http://localhost:1313/vi/3-prepare/</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
@@ -169,6 +247,32 @@
                 rel="alternate"
                 hreflang="vi"
                 href="http://localhost:1313/vi/3-prepare/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/vi/5-managed-instances/5.3-managed/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/5-managed-instances/5.3-managed/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/5-managed-instances/5.3-managed/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/vi/6-auto-scaling/6.3-scheduled_scaling/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/6-auto-scaling/6.3-scheduled_scaling/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="vi"
+                href="http://localhost:1313/vi/6-auto-scaling/6.3-scheduled_scaling/"
                 />
   </url><url>
     <loc>http://localhost:1313/vi/3-prepare/3.3-services/</loc>

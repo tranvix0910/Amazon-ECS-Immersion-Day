@@ -14,11 +14,11 @@ Amazon ECS has 4 main components:
 
 - **Cluster**: The central management space in Amazon ECS, where all application services and tasks are organized and operated.
 
-- **Service**: Represents a group of identical tasks, responsible for maintaining the desired number of tasks running, while supporting automatic restart or scaling when needed.
+- **Service**: Represents a group of identical tasks, responsible for maintaining the desired number of tasks running correctly, while supporting automatic restart or scaling when needed.
 
 {{< youtube fXiUlXy5kRA >}}
 
-- **Task**: The execution unit in ECS, consisting of one or more containers working together to perform a specific application function.
+- **Task**: The execution unit in ECS, consisting of one or more containers working together to perform a specific function of the application.
 
 - **Task Definition**: A detailed description of how a task is run, including information such as CPU, memory, container image, network configuration, IAM role, and other necessary settings.
 
@@ -30,11 +30,11 @@ Understanding these components is very important for using Amazon ECS effectivel
 
 There are 3 Layers in ECS:
 
-- **Capacity**: Infrastructure where containers run.
+- **Capacity**: Infrastructure where Containers run.
 
-- **Controller**: Deploy and manage applications running on containers.
+- **Controller**: Deploy and manage applications running on Containers.
 
-- **Provisioning**: Tools to interact with the scheduler to deploy and manage applications and containers.
+- **Provisioning**: Tools to interact with scheduler to deploy and manage applications and containers.
 
 ![Layers](/images/2-fundamentals/2.png)
 
@@ -44,7 +44,7 @@ Capacity (compute capacity) is the infrastructure where containers run. Below is
 
 #### Amazon ECS Managed Instances
 
-- Amazon ECS Managed Instances is a compute option for Amazon ECS, allowing you to run containerized workloads on various Amazon EC2 instance types, while transferring most infrastructure management to AWS.
+- Amazon ECS Managed Instances is a compute option for Amazon ECS, allowing you to run containerized workloads on various Amazon EC2 instance types, while delegating most infrastructure management to AWS.
 
 - With Amazon ECS Managed Instances, you can:
     - GPU acceleration.
@@ -59,8 +59,8 @@ Capacity (compute capacity) is the infrastructure where containers run. Below is
 
 #### Amazon EC2 Instances
 
-- You can choose the instance type and number of instances yourself.
-- Manage capacity yourself (Auto Scaling, patching, lifecycle, etc.).
+- You can choose instance type and number of instances yourself.
+- Self-manage Capacity (Auto Scaling, patching, lifecycle, etc.).
 
 #### Serverless
 
@@ -72,7 +72,7 @@ Capacity (compute capacity) is the infrastructure where containers run. Below is
 
 #### Server/VM On-Premises
 
-- Amazon ECS Anywhere registers external instances (on-premises servers or VMs). Connect them to an ECS cluster.
+- Amazon ECS Anywhere registers external instances (on-premises servers or VMs). Connect them to ECS cluster.
 
 #### Amazon ECS Scheduler
 
